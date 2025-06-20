@@ -1,0 +1,116 @@
+.even {
+  background-color: #f2f2f2;
+}
+
+.odd {
+  background-color: #ffffff;
+}
+
+table {
+  border-collapse: collapse;
+  border: solid 1px black;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid black;
+}
+
+.centered-table-container {
+  display: flex;
+  justify-content: center;
+}
+
+.tabladatos {
+    border: solid 1px  rgb(0, 0, 0);
+}
+
+.TituloTabla{
+    font-size: 24px;
+    color:  rgb(128, 37, 75);
+    background-color:rgb(68, 183, 212);
+    text-align: center;
+}
+
+.paginador{
+    text-align:center; 
+    margin-top: 20px; 
+}
+
+.columna-opcional{
+   /* display: flex;*/
+}
+
+.TituloCampo{
+    font-size: 20px;
+    color:  rgb(7, 7, 7);
+    background-color:rgb(60, 209, 105);
+    text-align: left;
+}
+
+
+/* Celulares */
+@media screen and (max-width: 480px) {
+  /* estilos para celulares pequeños */
+    /* estilos para monitores grandes */
+    .tabladatos {
+        /*max-width: 900px;*/
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .columna-opcional{
+        display: none;
+    }
+
+}
+
+/* Celulares grandes y pequeñas tabletas */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  /* estilos intermedios */
+    /* estilos para monitores grandes */
+    .tabladatos {
+        max-width: 300px;
+        width: 100%;
+        font-size: 12px;
+    }
+    
+    .columna-opcional{
+        display: none;
+    }
+
+}
+
+/* Tabletas */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* estilos para tablets */
+  /* estilos para monitores grandes */
+    .tabladatos {
+        max-width: 600px;
+        width: 100%;
+        font-size: 12px;
+    }
+    
+    .columna-opcional{
+        width: 200px;
+    }
+
+
+}
+
+/* Escritorio */
+@media screen and (min-width: 1025px) {
+  /* estilos para monitores grandes */
+    .tabladatos {
+        max-width: 900px;
+        width: 100%;
+        font-size: 12px;
+    }
+   
+    .columna-opcional{
+        width: 200px;
+    }
+
+
+}
