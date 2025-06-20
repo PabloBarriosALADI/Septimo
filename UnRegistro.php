@@ -45,7 +45,7 @@
         </div>
     </div>
 <?php
-
+//primero compartida
 function test_input($data) {
   $data = trim((string)$data);
   $data = stripslashes((string)$data);
