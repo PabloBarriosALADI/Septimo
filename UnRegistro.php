@@ -47,6 +47,7 @@
 <?php
 //primero compartida
 //segundo septimo
+//terceri compartida
 function test_input($data) {
   $data = trim((string)$data);
   $data = stripslashes((string)$data);
