@@ -15,7 +15,7 @@
 
   echo "<div style='display: flex; justify-content: center;'>";
   echo "<table class='tabladatos';'>";
-  echo "<tr><th class='TituloTabla'>Correo</th><th class='TituloTabla'>Pais</th><th class='TituloTabla'>Nombre</th><th class='TituloTabla columna-opcional'>Fuente</th><th>Borrar</th></tr>";
+  echo "<tr><th class='TituloTabla'>Correo</th><th class='TituloTabla'>Pais</th><th class='TituloTabla'>Nombre</th><th class='TituloTabla columna-opcional'>Fuente</th><th class='TituloTabla'>Borrar</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   private $rowCount = 0;
