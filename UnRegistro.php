@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fNombre = test_input($_POST["fNombre"]);
     $fFuente = test_input($_POST["fFuente"]);
         
-    echo "<h2>" .$submit . "</h2><br>";
+    echo "<h2> La forma" .$submit . "</h2><br>";
 
     if ($submit == 'Editar'){
         try {
@@ -166,7 +166,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo "<h1>Editar</h1>";
                         echo "<table class='tabladatos';'>";
                         echo "<tr><th class='TituloCampo'>Correo </th><th><input type='text' name='fEmail' value=\"" . (!empty($email)?htmlspecialchars($email): '') . "\"></th></tr>";
-                        echo "<tr><th class='TituloCampo'>País </th><th><input type='text' name='fPais' value=\"" . (!empty($pais)?htmlspecialchars($pais): '') . "\"></th></tr>";
+
+// Empieza
+
+        echo '<label for="fPais">País:</label>';
+        echo '<select id="fPais" name="fPais">';
+
+        // Verificar conexión
+
+        // Consulta SQL
+        $sql = "SELECT p.PaisNombreEsp CodigoPais, p.PaisNombreEsp NombrePais FROM areageoecopaises aep, Paises p where aep.areaGeoEcoCod = 11 and aep.paiscod = p.paiscod";
+        $resultado = $conn->query($sql);
+
+        // Generar opciones del combo
+        if ($resultado->RowCount() > 0) {
+            while($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
+                echo "<p> Codigo " . $fila["CodigoPais"] . "Nombre Pais " . $pais . "</p>";
+                if ($fila["CodigoPais"] == $pais){
+                    echo "<option value='" . $fila["CodigoPais"] . " selected'>" . $fila["NombrePais"] . "</option>";
+                }else{
+                    echo "<option value='" . $fila["CodigoPais"] . "'>" . $fila["NombrePais"] . "</option>";
+                }
+            }
+        } else {
+            echo "<option value=''>No hay datos disponibles</option>";
+        }
+
+
+        // Cerrar conexión
+        // $conexion->close();
+// Termina
+//                        echo "<tr><th class='TituloCampo'>País </th><th><input type='text' name='fPais' value=\"" . (!empty($pais)?htmlspecialchars($pais): '') . "\"></th></tr>";
                         echo "<tr><th class='TituloCampo'>Nombre </th><th><input type='text' name='fNombre' value=\"" . (!empty($nombre)?htmlspecialchars($nombre): '') . "\"></th></tr>";
                         echo "<tr><th class='TituloCampo'>Fuente: </th><th><input type='text' name='fFuente' value=\"" . (!empty($fuente)?htmlspecialchars($fuente): '') . "\"></th></tr>";
                         echo "</table>";
