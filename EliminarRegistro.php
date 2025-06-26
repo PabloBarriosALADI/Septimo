@@ -14,7 +14,7 @@ if (isset($_GET['correoelectronico'])) {
     $correoelectronico = htmlspecialchars($_GET['correoelectronico']); // Sanitiza para evitar XSS
 
     try {
-/*        echo "Correo Electronico " . $correoelectronico;
+        echo "Correo Electronico " . $correoelectronico;
         include "ConexionABase.php";
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -24,13 +24,14 @@ if (isset($_GET['correoelectronico'])) {
                                 WHERE WSEmail = :fEmail ");
         $stmt->bindValue(':fEmail', $correoelectronico, PDO::PARAM_STR);
         $stmt->execute();
-*/
- //       if ($stmt->rowCount() > 0) {
-        $stmt = 1;
-        if ($stmt == 0) {    
+
+        if ($stmt->rowCount() > 0) {
+//        $stmt = 1;
+//        if ($stmt == 0) {    
 //            echo '<div id="warning-message"></div>';
 //            echo '<script>document.getElementById("warning-message").textContent = "Esta es una advertencia personalizada."</script>';
-            echo "<script>confirm('Registro actualizado correctamente.');</script>";
+            echo "<script>confirm('Registro actualizado correctamente.'); window.location.href='ListarPBarrios.php';</script>";
+            echo '<input type="submit" name="submit" value="Volver" onclick="history.back();">';
             //echo "<script>history.back()</script>";
             // echo "Registro actualizado correctamente.";
         } else {

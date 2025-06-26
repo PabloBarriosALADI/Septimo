@@ -65,9 +65,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fNombre = test_input($_POST["fNombre"]);
     $fFuente = test_input($_POST["fFuente"]);
         
-    echo "<h2> La forma" .$submit . "</h2><br>";
+    echo "<h2>" .$submit . "</h2><br>";
 
-    if ($submit == 'Editar'){
+    if ($submit == 'Editar'){ //Editar
         try {
         
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } catch(PDOException $e) {
             echo "Error: " . $e->getMessage();  
         }   
-    }else{
+    }else{ //Insertar
         try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         document.getElementById("modal").style.display = "block";
         };
         </script>
-    <?php
+    <?php // ver que pasa si se elimina
     header("Location: ./ListarPBarrios.php");
     //header("Location: ./VentanaModal.html" );
 
@@ -140,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }else {
 
-    if (isset($_GET['correoelectronico'])) {
+    if (isset($_GET['correoelectronico'])) { //Recibo correo del contacto a Editar
         $correoelectronico = htmlspecialchars($_GET['correoelectronico']); // Sanitiza para evitar XSS
 
         try {
@@ -167,36 +167,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo "<table class='tabladatos';'>";
                         echo "<tr><th class='TituloCampo'>Correo </th><th><input type='text' name='fEmail' value=\"" . (!empty($email)?htmlspecialchars($email): '') . "\"></th></tr>";
 
-// Empieza
+                        echo "<tr><th class='TituloCampo'><label for='fPais'>País:</label></th><th>";
+                        echo "<select id='fPais' name='fPais'>";
+                        $sql = "SELECT p.PaisNombreEsp CodigoPais, p.PaisNombreEsp NombrePais FROM areageoecopaises aep, Paises p where aep.areaGeoEcoCod = 11 and aep.paiscod = p.paiscod";
+                        $resultado = $conn->query($sql);
 
-        echo '<label for="fPais">País:</label>';
-        echo '<select id="fPais" name="fPais">';
-
-        // Verificar conexión
-
-        // Consulta SQL
-        $sql = "SELECT p.PaisNombreEsp CodigoPais, p.PaisNombreEsp NombrePais FROM areageoecopaises aep, Paises p where aep.areaGeoEcoCod = 11 and aep.paiscod = p.paiscod";
-        $resultado = $conn->query($sql);
-
-        // Generar opciones del combo
-        if ($resultado->RowCount() > 0) {
-            while($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
-                echo "<p> Codigo " . $fila["CodigoPais"] . "Nombre Pais " . $pais . "</p>";
-                if ($fila["CodigoPais"] == $pais){
-                    echo "<option value='" . $fila["CodigoPais"] . " selected'>" . $fila["NombrePais"] . "</option>";
-                }else{
-                    echo "<option value='" . $fila["CodigoPais"] . "'>" . $fila["NombrePais"] . "</option>";
-                }
-            }
-        } else {
-            echo "<option value=''>No hay datos disponibles</option>";
-        }
-
-
-        // Cerrar conexión
-        // $conexion->close();
-// Termina
-//                        echo "<tr><th class='TituloCampo'>País </th><th><input type='text' name='fPais' value=\"" . (!empty($pais)?htmlspecialchars($pais): '') . "\"></th></tr>";
+                        // Generar opciones del combo
+                        if ($resultado->RowCount() > 0) {
+                            while($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
+                                
+                                if (trim($fila["CodigoPais"]) == $pais){
+                                    echo "<option value='" . $fila["CodigoPais"] . "' selected>" . $fila["NombrePais"] . "</option>";
+                                }else{
+                                    echo "<option value='" . $fila["CodigoPais"] . "'>" . $fila["NombrePais"] . "</option>";
+                                }
+                            }
+                        } else {
+                            echo "<option value=''>No hay datos disponibles</option>";
+                        }
+                        echo "</select>";
                         echo "<tr><th class='TituloCampo'>Nombre </th><th><input type='text' name='fNombre' value=\"" . (!empty($nombre)?htmlspecialchars($nombre): '') . "\"></th></tr>";
                         echo "<tr><th class='TituloCampo'>Fuente: </th><th><input type='text' name='fFuente' value=\"" . (!empty($fuente)?htmlspecialchars($fuente): '') . "\"></th></tr>";
                         echo "</table>";
@@ -211,7 +200,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } catch(PDOException $e) {
             echo "Error: " . $e->getMessage();  
         }   
-    }else{
+    }else{ //No recibo correo y estoy en el modo Insertar
+        include "ConexionABase.php";
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         echo '<form method="post" action='. htmlspecialchars($_SERVER["PHP_SELF"]) . '>';
         $email = "";
         $pais = "";
@@ -220,7 +212,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<h1>Agregar</h1>";
         echo "<table class='tabladatos';'>";
         echo "<tr><th class='TituloCampo'>Correo </th><th><input type='text' name='fEmail' value=\"" . (!empty($email)?htmlspecialchars($email): '') . "\"></th></tr>";
-        echo "<tr><th class='TituloCampo'>País </th><th><input type='text' name='fPais' value=\"" . (!empty($pais)?htmlspecialchars($pais): '') . "\"></th></tr>";
+        echo "<tr><th class='TituloCampo'><label for='fPais'>País:</label></th><th>";
+        echo "<select id='fPais' name='fPais'>";
+        $sql = "SELECT p.PaisNombreEsp CodigoPais, p.PaisNombreEsp NombrePais FROM areageoecopaises aep, Paises p where aep.areaGeoEcoCod = 11 and aep.paiscod = p.paiscod";
+        $resultado = $conn->query($sql);
+
+        // Generar opciones del combo
+        if ($resultado->RowCount() > 0) {
+            while($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
+                echo "<option value='" . $fila["CodigoPais"] . "'>" . $fila["NombrePais"] . "</option>";
+            }
+        } else {
+            echo "<option value=''>No hay datos disponibles</option>";
+        }
+        echo "<option value=''Selected>Elija una opción</option>";
+        echo "</select>";
         echo "<tr><th class='TituloCampo'>Nombre </th><th><input type='text' name='fNombre' value=\"" . (!empty($nombre)?htmlspecialchars($nombre): '') . "\"></th></tr>";
         echo "<tr><th class='TituloCampo'>Fuente: </th><th><input type='text' name='fFuente' value=\"" . (!empty($fuente)?htmlspecialchars($fuente): '') . "\"></th></tr>";
         echo "</table>";

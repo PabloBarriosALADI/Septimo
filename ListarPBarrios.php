@@ -35,8 +35,7 @@ class TableRows extends RecursiveIteratorIterator {
           return "<td class= 'columna-opcional'; style='width:150px;border:1px solid black;'>" . parent::current(). "</td>";
           break;
       case 5:
-          //return "<td style='width:150px;border:1px solid red;'> <a href='eliminar.php?correo=valor>Borrar Registro</a></td>";  
-          return "<td style='width:150px;border:1px solid red;'>  <a href='EliminarRegistro.php?correoelectronico=" . parent::current(). "'onclick=\"return confirm('¿Estás seguro de eliminar el registro?');\">" .parent::current() . "</td>";  
+          return "<td style='width:150px;border:1px solid red;'> <a href='EliminarRegistro.php?correoelectronico=" . parent::current() . "'onclick=\"return confirm('¿Estás seguro de eliminar el registro?');\"style='display: block; width: fit-content; margin: auto;'><img src='./Resources/DeleteRow.gif' alt='Eliminar el Registro'></a></td>";
           break;
       default:
           return "<td style='width:150px;border:1px solid black;'>" . parent::current(). "</td>";
