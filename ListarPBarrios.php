@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Mi Página</title>
-  <h1> Los Barrios Barbas</h1>
+  <h1> Los Barbas</h1>
   <link rel="stylesheet" href="./estilos/PHPTabla.css">  
 </head>
 <body>
